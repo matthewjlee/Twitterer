@@ -1,5 +1,5 @@
 //
-//  TweetDetailsTableViewCell.swift
+//  TwitterCell.swift
 //  TwitterDemo
 //
 //  Created by Matthew Lee on 2/12/17.
@@ -8,9 +8,8 @@
 
 import UIKit
 
-class TweetDetailsTableViewCell: UITableViewCell {
+class TwitterCell: UITableViewCell {
 
-    @IBOutlet weak var label: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
