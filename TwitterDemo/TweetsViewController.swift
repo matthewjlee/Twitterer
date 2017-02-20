@@ -21,10 +21,8 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         TwitterClient.sharedInstance?.homeTimeline(success: { (tweets) in
             self.tweets = tweets
+            self.tableView.reloadData()
             
-            for tweet in tweets {
-                print(tweet.text)
-            }
         }, failure: { (error) in
             print("error: \(error.localizedDescription)")
         })
@@ -43,14 +41,27 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "TweetDetailsTableViewCell") as! TweetDetailsTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "TwitterCell") as! TwitterCell
+        let tweet = tweets[indexPath.row]
+        //cell.tweet = tweet
+        cell.descriptionLabel.text = tweet.text!
+        cell.retweetCountLabel.text = String(tweet.retweetCount)
+        cell.favoriteCountLabel.text = String(tweet.favoritesCount)
+        
+        let date = tweet.timestamp
+        let formatter = DateFormatter()
+        formatter.dateFormat = "d MMM YY"
         
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return tweets.count
+        if let tweets = tweets {
+            return tweets.count
+        } else {
+            return 0
+        }
     }
 
     /*
