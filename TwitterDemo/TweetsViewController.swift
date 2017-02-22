@@ -19,6 +19,9 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         tableView.dataSource = self
         tableView.delegate = self
         
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 120
+        
         TwitterClient.sharedInstance?.homeTimeline(success: { (tweets) in
             self.tweets = tweets
             self.tableView.reloadData()
@@ -47,12 +50,10 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         cell.descriptionLabel.text = tweet.text!
         cell.retweetCountLabel.text = String(tweet.retweetCount)
         cell.favoriteCountLabel.text = String(tweet.favoritesCount)
-        
-        let date = tweet.timestamp
-        let formatter = DateFormatter()
-        formatter.dateFormat = "d MMM YY"
-        
-        
+        cell.nameLabel.text = tweet.name
+        cell.handleLabel.text = tweet.screenname
+        cell.profileImageView.setImageWith(tweet.profileUrl!)
+        //cell.datelabel.text = tweet.timestamp as! String
         return cell
     }
     
