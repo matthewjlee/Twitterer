@@ -112,6 +112,9 @@
                                                         <constraint firstAttribute="height" constant="26" id="jat-6v-dGQ"/>
                                                     </constraints>
                                                     <state key="normal" title="Button" image="retweet-icon"/>
+                                                    <connections>
+                                                        <action selector="onRetweet:" destination="AfT-tQ-Lzd" eventType="touchUpInside" id="wk7-yB-LbF"/>
+                                                    </connections>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="95M-eb-pyq">
                                                     <rect key="frame" x="174" y="73" width="16" height="17"/>
@@ -126,6 +129,9 @@
                                                         <constraint firstAttribute="width" constant="22" id="cdI-dz-Fer"/>
                                                     </constraints>
                                                     <state key="normal" title="Button" image="favor-icon"/>
+                                                    <connections>
+                                                        <action selector="onFavorite:" destination="AfT-tQ-Lzd" eventType="touchUpInside" id="ed5-c5-NMr"/>
+                                                    </connections>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="15" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Unb-Gk-J2k">
                                                     <rect key="frame" x="245" y="73" width="15" height="17"/>
@@ -165,10 +171,12 @@
                                         <connections>
                                             <outlet property="datelabel" destination="gHa-JX-BID" id="Y11-GF-3mb"/>
                                             <outlet property="descriptionLabel" destination="Z5K-LO-oGr" id="kEF-B0-FJY"/>
+                                            <outlet property="favoriteButton" destination="723-vy-b9c" id="99T-VI-DwS"/>
                                             <outlet property="favoriteCountLabel" destination="Unb-Gk-J2k" id="XTJ-hH-HKi"/>
                                             <outlet property="handleLabel" destination="mEi-02-Gsr" id="Fub-2K-drX"/>
                                             <outlet property="nameLabel" destination="7z7-Ch-768" id="3pb-2T-4d2"/>
                                             <outlet property="profileImageView" destination="BNG-AL-G2f" id="anf-HI-Now"/>
+                                            <outlet property="retweetButton" destination="nly-4x-LRv" id="wgg-V3-7vY"/>
                                             <outlet property="retweetCountLabel" destination="95M-eb-pyq" id="dz3-Qx-ISc"/>
                                         </connections>
                                     </tableViewCell>

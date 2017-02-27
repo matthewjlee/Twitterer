@@ -53,7 +53,8 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         cell.nameLabel.text = tweet.name
         cell.handleLabel.text = tweet.screenname
         cell.profileImageView.setImageWith(tweet.profileUrl!)
-        //cell.datelabel.text = tweet.timestamp as! String
+        cell.tweetID = tweet.tweetID
+        cell.datelabel.text = tweet.timestampString
         return cell
     }
     
