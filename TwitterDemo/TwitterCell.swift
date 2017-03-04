@@ -43,29 +43,54 @@ class TwitterCell: UITableViewCell {
     @IBAction func onRetweet(_ sender: Any) {
         print("tweet ID: \(tweetID)")
         
-        self.retweetButton.setImage(UIImage(named: "retweet-icon-green"), for: UIControlState.normal)
-        self.retweetCountLabel.textColor = UIColor.green
-        
         TwitterClient.sharedInstance?.retweet(success: { (tweet: Tweet) in
             print(tweet.retweetCount)
             self.retweetCountLabel.text = "\(tweet.retweetCount)"
+            self.retweetButton.setImage(UIImage(named: "retweet-icon-green"), for: UIControlState.normal)
+            self.retweetCountLabel.textColor = UIColor.green
         }, failure: { (error: Error) in
-            print(error.localizedDescription)
+            //print(error.localizedDescription)
+            self.onUnretweet()
         }, tweetID: tweetID)
     }
     
     @IBAction func onFavorite(_ sender: Any) {
         print("tweet ID: \(tweetID)")
         
-        self.favoriteButton.setImage(UIImage(named: "favor-icon-red"), for: UIControlState.normal)
-        self.favoriteCountLabel.textColor = UIColor.red
-        
         TwitterClient.sharedInstance?.favorite(success: { (tweet: Tweet) in
             print(tweet.favoritesCount)
             self.favoriteCountLabel.text = "\(tweet.favoritesCount)"
+            self.favoriteButton.setImage(UIImage(named: "favor-icon-red"), for: UIControlState.normal)
+            self.favoriteCountLabel.textColor = UIColor.red
+            
         }, failure: { (error: Error) in
-            print(error.localizedDescription)
+            //print(error.localizedDescription)
+            self.onUnfavorite()
         }, tweetID: tweetID)
     }
+    
+    func onUnfavorite() {
+        TwitterClient.sharedInstance?.unfavorite(success: { (tweet: Tweet) in
+            print("unfavorite tweetID")
+            self.favoriteCountLabel.text = "\(tweet.favoritesCount)"
+            self.favoriteCountLabel.textColor = UIColor.black
+            self.favoriteButton.setImage(UIImage(named: "favor-icon"), for: UIControlState.normal)
+        }, failure: { (error: Error) in
+            print("unfavorite failed. Error code: \(error.localizedDescription)")
+        }, tweetID: tweetID)
+    }
+    
+    func onUnretweet() {
+        TwitterClient.sharedInstance?.unretweet(success: { (tweet: Tweet) in
+            print("unretweet")
+            self.retweetCountLabel.text = "\(tweet.retweetCount)"
+            self.retweetCountLabel.textColor = UIColor.black
+            self.retweetButton.setImage(UIImage(named: "retweet-icon"), for: UIControlState.normal)
+        }, failure: { (error: Error) in
+            print("unretweet failed. Error code: \(error.localizedDescription)")
+        }, tweetID: tweetID)
+    }
+    
+    
     
 }

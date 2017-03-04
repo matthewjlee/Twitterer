@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AFNetworking
 
 class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
@@ -33,6 +34,10 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         // Do any additional setup after loading the view.
         
     }
+    
+    func onRefresh() {
+        
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -54,7 +59,10 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         cell.handleLabel.text = tweet.screenname
         cell.profileImageView.setImageWith(tweet.profileUrl!)
         cell.tweetID = tweet.tweetID
-        cell.datelabel.text = tweet.timestampString
+
+        let formatter = DateFormatter()
+        formatter.dateFormat = "EEE HH:mm"
+        cell.datelabel.text = formatter.string(from: tweet.timestamp!)
         return cell
     }
     
