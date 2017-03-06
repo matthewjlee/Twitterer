@@ -19,6 +19,8 @@ class Tweet: NSObject {
     var screenname: String?
     var profileUrl: URL?
     var tweetID: Int = 0
+    var favorited:  Bool = false
+    var retweet: Bool = false
     
     init(dictionary: NSDictionary) {
         text = dictionary["text"] as? String
@@ -45,6 +47,17 @@ class Tweet: NSObject {
         if let profileUrlString = profileUrlString {
             profileUrl = URL(string: profileUrlString)
         }
+        
+        favorited = dictionary["favorited"] as! Bool
+        let hasRetweetedString = dictionary["retweeted"] as? String
+        if let hasRetweetedString = hasRetweetedString {
+            if hasRetweetedString == "tweeted" {
+                retweet = true
+            } else {
+                retweet = false
+            }
+        }
+
     }
     
     class func tweetsWithArray (dictionaries: [NSDictionary]) -> [Tweet] {

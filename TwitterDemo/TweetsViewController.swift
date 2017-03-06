@@ -14,6 +14,7 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     var tweets: [Tweet]!
     
     @IBOutlet weak var tableView: UITableView!
+    let refreshControl = UIRefreshControl()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,6 +24,7 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 120
         
+        /**
         TwitterClient.sharedInstance?.homeTimeline(success: { (tweets) in
             self.tweets = tweets
             self.tableView.reloadData()
@@ -30,13 +32,27 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }, failure: { (error) in
             print("error: \(error.localizedDescription)")
         })
+        */
+        
+        onRefresh()
+        
+        refreshControl.addTarget(self, action: #selector(onRefresh), for: .valueChanged)
+        tableView.insertSubview(refreshControl, at: 0)
+        
 
         // Do any additional setup after loading the view.
         
     }
     
     func onRefresh() {
-        
+        TwitterClient.sharedInstance?.homeTimeline(success: { (tweets) in
+            self.tweets = tweets
+            self.tableView.reloadData()
+            
+        }, failure: { (error) in
+            print("error: \(error.localizedDescription)")
+        })
+        refreshControl.endRefreshing()
     }
 
     override func didReceiveMemoryWarning() {
@@ -59,6 +75,8 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         cell.handleLabel.text = tweet.screenname
         cell.profileImageView.setImageWith(tweet.profileUrl!)
         cell.tweetID = tweet.tweetID
+        cell.hasRetweeted = tweet.retweet
+        cell.hasFavorited = tweet.favorited
 
         let formatter = DateFormatter()
         formatter.dateFormat = "EEE HH:mm"
@@ -74,14 +92,20 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
     }
 
-    /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        let cell = sender as! UITableViewCell
+        let indexPath = tableView.indexPath(for: cell)
+        let tweet = tweets![indexPath!.row]
+        
+        let detailViewController = segue.destination as! TweetDetailViewController
+        detailViewController.tweet = tweet
+        
+        print("\(tweet.tweetID)")
     }
-    */
 
 }

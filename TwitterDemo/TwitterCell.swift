@@ -13,6 +13,8 @@ class TwitterCell: UITableViewCell {
     var user: User!
     var tweet: Tweet!
     var tweetID: Int = 0
+    var hasFavorited: Bool?
+    var hasRetweeted: Bool?
 
     @IBOutlet weak var favoriteButton: UIButton!
     @IBOutlet weak var retweetButton: UIButton!
@@ -32,6 +34,18 @@ class TwitterCell: UITableViewCell {
         profileImageView.clipsToBounds = true
         profileImageView.layer.cornerRadius = 3
         profileImageView.clipsToBounds = true
+        
+        /**
+        if let hasFavorited = hasFavorited {
+            self.favoriteButton.setImage(UIImage(named: "favor-icon-red"), for: UIControlState.normal)
+            self.favoriteCountLabel.textColor = UIColor.red
+        }
+        
+        if let hasRetweeted = hasRetweeted {
+            self.retweetButton.setImage(UIImage(named: "retweet-icon-green"), for: UIControlState.normal)
+            self.retweetCountLabel.textColor = UIColor.green
+        }
+ */
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
