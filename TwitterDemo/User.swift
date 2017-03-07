@@ -14,6 +14,10 @@ class User: NSObject {
     var screenname: String?
     var profileUrl: URL?
     var tagline: String?
+    var userID: Int?
+    var tweetsCount: Int?
+    var followingCount: Int?
+    var followersCount: Int?
     
     var dictionary: NSDictionary?
     
@@ -29,6 +33,11 @@ class User: NSObject {
         }
         
         tagline = dictionary["description"] as? String
+        userID = dictionary["id"] as? Int
+        
+        tweetsCount = (dictionary["statuses_count"] as? Int) ?? 0
+        followingCount = (dictionary["friends_count"] as? Int) ?? 0
+        followersCount = (dictionary["followers_count"] as? Int) ?? 0
     }
     
     static let userDidLogoutNotification = "UserDidLogout"
@@ -63,6 +72,17 @@ class User: NSObject {
             }
             defaults.synchronize()
         }
+    }
+    
+    class func usersInArray(dictionaries: [NSDictionary]) -> [User] {
+        var users = [User]()
+        
+        for dictionary in dictionaries {
+            let user = User(dictionary: dictionary)
+            users.append(user)
+        }
+        
+        return users
     }
     
 }

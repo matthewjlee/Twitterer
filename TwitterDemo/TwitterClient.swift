@@ -135,4 +135,31 @@ class TwitterClient: BDBOAuth1SessionManager {
             failure(error)
         }
     }
+    
+    func getUser(success: @escaping ([User]) -> (), failure: @escaping (Error) -> (), userID: Int) {
+        get("1.1/users/lookup.json", parameters: ["user_id": userID], progress: nil, success: { (task: URLSessionDataTask, response: Any?) in
+            print("get user")
+            
+            let dictionary = response as! [NSDictionary]
+            let users = User.usersInArray(dictionaries: dictionary)
+            success(users)
+        }) { (task: URLSessionDataTask?, error: Error) in
+            print(error.localizedDescription)
+        }
+    }
+    
+    func userTimeline(success: @escaping ([Tweet]) -> (), failure: @escaping (Error) -> (), userID: Int) {
+        
+        get("1.1/statuses/user_timeline.json", parameters: ["user_id": userID], progress: nil, success: {(task: URLSessionDataTask, response: Any?) -> Void in
+            
+            let dictionaries = response as! [NSDictionary]
+            
+            let tweets = Tweet.tweetsWithArray(dictionaries: dictionaries)
+            
+            success(tweets)
+            
+        }, failure: {(task: URLSessionDataTask?, error: Error) -> Void in
+            failure(error)
+        })
+    }
 }

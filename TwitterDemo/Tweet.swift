@@ -21,6 +21,7 @@ class Tweet: NSObject {
     var tweetID: Int = 0
     var favorited:  Bool = false
     var retweet: Bool = false
+    var userID: Int?
     
     init(dictionary: NSDictionary) {
         text = dictionary["text"] as? String
@@ -39,6 +40,7 @@ class Tweet: NSObject {
         }
         
         let user = dictionary["user"] as! NSDictionary
+        userID = dictionary["id"] as? Int
         
         name = user["name"] as? String
         screenname = user["screen_name"] as? String

@@ -98,14 +98,32 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
-        let cell = sender as! UITableViewCell
-        let indexPath = tableView.indexPath(for: cell)
-        let tweet = tweets![indexPath!.row]
+        if let sender = sender as? UITableViewCell {
+            let cell = sender
+            let indexPath = tableView.indexPath(for: cell)
+            let tweet = tweets![indexPath!.row]
+            
+            let detailViewController = segue.destination as! TweetDetailViewController
+            detailViewController.tweet = tweet
+            
+            print("\(tweet.tweetID)")
+        }
         
-        let detailViewController = segue.destination as! TweetDetailViewController
-        detailViewController.tweet = tweet
+        if let sender = sender as? UIButton {
+            if let superviewImage = sender.superview {
+                if let cell = superviewImage.superview as? TwitterCell {
+                    let profileViewController = segue.destination as! ProfileViewController
+                    //profileViewController.userID = User._currentuser?.userID
         
-        print("\(tweet.tweetID)")
+                    let indexPath = tableView.indexPath(for: cell)
+                    let tweet = tweets![indexPath!.row]
+                    
+                    profileViewController.userID = tweet.userID
+                }
+            }
+            
+            
+        }
     }
 
 }
